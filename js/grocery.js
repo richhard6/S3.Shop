@@ -135,16 +135,66 @@ function calculateTotal() {
 
     console.log(totalCost)
     */
+  calculateSubtotals()
 
   let sum = 0
-  for (const key in cartList) {
-    sum += cartList[key].price
+  for (const kind in subtotal) {
+    sum += subtotal[kind].value - subtotal[kind].discount
   }
   console.log(sum)
 }
 
 // Exercise 5
-function applyPromotionsSubtotals() {}
+
+let prevFourOilOcurrences = 0
+let prevCupcakeDiscount = 0
+function applyPromotionsSubtotals() {
+  const itemsQuantity = {
+    cookingOil: 0,
+    cupcakeMix: 0,
+  }
+
+  cartList
+    .filter(
+      (item) =>
+        item.name === 'cooking oil' || item.name === 'Instant cupcake mixture'
+    )
+    .map((item) =>
+      item.name === 'cooking oil'
+        ? itemsQuantity.cookingOil++
+        : itemsQuantity.cupcakeMix++
+    )
+
+  console.log(itemsQuantity)
+
+  let quantityToCupcakeDiscount = itemsQuantity.cupcakeMix * products[2].price
+
+  if (itemsQuantity.cupcakeMix > 10) {
+    const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
+
+    console.log(twoThirdsDisc, 'quantity')
+    console.log(subtotal.grocery.value, 'value') // no entra cuando llamamos directmente a applyPromotions(), hay que llamar primero a calculateTotal y despues a applyPromotions().
+    const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
+    if (prevCupcakeDiscount !== totalDiscount) {
+      subtotal.grocery.discount += totalDiscount
+      prevCupcakeDiscount = totalDiscount
+    }
+    console.log(twoThirdsDisc)
+  }
+  //cuando usamos mezclamos 11 cupcake y 4 oils se lia completamente. hay que hacer la validacion de oil (prev )
+
+  const countFourOilOcurrences = itemsQuantity.cookingOil / 4
+  let quantityToOilDiscount = prevFourOilOcurrences * 10
+
+  if (countFourOilOcurrences !== prevFourOilOcurrences) {
+    quantityToOilDiscount = countFourOilOcurrences * 10
+    prevFourOilOcurrences = countFourOilOcurrences
+    subtotal.grocery.discount += quantityToOilDiscount
+    console.log(quantityToOilDiscount)
+  }
+
+  calculateTotal()
+}
 
 // Exercise 6
 function generateCart() {
