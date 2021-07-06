@@ -174,14 +174,13 @@ function applyPromotionsSubtotals() {
 
     console.log(twoThirdsDisc, 'quantity')
     console.log(subtotal.grocery.value, 'value') // no entra cuando llamamos directmente a applyPromotions(), hay que llamar primero a calculateTotal y despues a applyPromotions().
-    const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
+    const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc //solo con el cupcake, el oil funciona perfectamente.
     if (prevCupcakeDiscount !== totalDiscount) {
-      subtotal.grocery.discount += totalDiscount
+      subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
       prevCupcakeDiscount = totalDiscount
     }
     console.log(twoThirdsDisc)
   }
-  //cuando usamos mezclamos 11 cupcake y 4 oils se lia completamente. hay que hacer la validacion de oil (prev )
 
   const countFourOilOcurrences = itemsQuantity.cookingOil / 4
   let quantityToOilDiscount = prevFourOilOcurrences * 10
