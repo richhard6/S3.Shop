@@ -220,38 +220,57 @@ function generateCart() {
       let customObj = {
         [`"${obj.name}"`]: obj.quantity,
       }
-
       latestAdd = { ...latestAdd, ...customObj }
-
       console.log(latestAdd)
+
+      console.log('else')
     } else {
       const occurence = cart.find((item) => item.name === obj.name)
 
-      occurence.quantity++
+      if (occurence.quantity !== latestAdd[`"${occurence.name}"`]) {
+        let customObj = {
+          [`"${obj.name}"`]: occurence.quantity,
+        }
 
-      let customObj = {
-        [`"${obj.name}"`]: occurence.quantity,
+        latestAdd = { ...latestAdd, ...customObj }
+
+        console.log('noelse')
+        console.log(latestAdd)
+      } else {
+        occurence.quantity++
       }
 
-      latestAdd = { ...latestAdd, ...customObj }
-
-      console.log(latestAdd)
       return occurence
     }
   }
 
   for (const key in cartList) {
     if (cartList.length !== prevCartListLength) {
-      const pointer = addToCart(cart, cartList[key])
-
-      let lol = { ...pointer }
-      console.log(lol)
-      const lmao = cart.find((item) => item.name === lol.name)
-
-      //console.log(lmao.quantity - cartList.length)
+      addToCart(cart, cartList[key])
     }
   }
 
+  /*   cart.map((item) => {
+    if (item.quantity === latestAdd[`"${item.name}"`]) {
+      console.log(item.quantity)
+      console.log(latestAdd[`"${item.name}"`])
+      item.quantity -= latestAdd[`"${item.name}"`]
+
+      const obj = { quantity: latestAdd[`"${item.name}"`] }
+      item = { ...item, ...obj }
+    }
+
+    item.quantity += latestAdd[`"${item.name}"`]
+    latestAdd[`"${item.name}"`] = item.quantity + latestAdd[`"${item.name}"`]
+  })
+
+  for (const key in cart) {
+    console.log(latestAdd[`"${cart[key].name}"`])
+    cart[key].quantity += latestAdd[`"${cart[key].name}"`]
+    if (latestAdd[`"${cart[key].name}"`] === cart[key].quantity) {
+      cart[key].quantity -= 2
+    }
+  } */
   prevCartListLength = cartList.length
 }
 
