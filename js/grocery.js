@@ -167,38 +167,92 @@ function applyPromotionsSubtotals() {
 
   console.log(itemsQuantity)
 
-  let quantityToCupcakeDiscount = itemsQuantity.cupcakeMix * products[2].price
+  getCupcakeDiscount(itemsQuantity.cupcakeMix)
+  getOilDiscount(itemsQuantity.cookingOil)
 
-  if (itemsQuantity.cupcakeMix > 10) {
+  calculateTotal()
+}
+
+const getCupcakeDiscount = (cupcakeMix) => {
+  let quantityToCupcakeDiscount = cupcakeMix * products[2].price
+
+  if (cupcakeMix > 10) {
     const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
 
     console.log(twoThirdsDisc, 'quantity')
-    console.log(subtotal.grocery.value, 'value') // no entra cuando llamamos directmente a applyPromotions(), hay que llamar primero a calculateTotal y despues a applyPromotions().
-    const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc //solo con el cupcake, el oil funciona perfectamente.
+    console.log(subtotal.grocery.value, 'value')
+    const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
     if (prevCupcakeDiscount !== totalDiscount) {
       subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
       prevCupcakeDiscount = totalDiscount
     }
     console.log(twoThirdsDisc)
   }
+}
 
-  const countFourOilOcurrences = itemsQuantity.cookingOil / 4
+const getOilDiscount = (cookingOil) => {
+  const countFourOilOcurrences = cookingOil / 4
   let quantityToOilDiscount = prevFourOilOcurrences * 10
 
   if (countFourOilOcurrences !== prevFourOilOcurrences) {
-    quantityToOilDiscount = countFourOilOcurrences * 10
-    prevFourOilOcurrences = countFourOilOcurrences
-    subtotal.grocery.discount += quantityToOilDiscount
-    console.log(quantityToOilDiscount)
+    if (cookingOil % 4 === 0) {
+      quantityToOilDiscount =
+        countFourOilOcurrences * 10 - quantityToOilDiscount
+      prevFourOilOcurrences = countFourOilOcurrences
+      subtotal.grocery.discount += quantityToOilDiscount
+    }
   }
-
-  calculateTotal()
 }
 
 // Exercise 6
+let prevCartListLength
+let latestAdd = {}
 function generateCart() {
   // Using the "cartlist" array that contains all the items in the shopping cart,
   // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+
+  const addToCart = (arr, obj) => {
+    const found = arr.some((item) => item.name === obj.name)
+    if (!found) {
+      obj = { ...obj, ...{ quantity: 1 } }
+      arr.push(obj)
+
+      let customObj = {
+        [`"${obj.name}"`]: obj.quantity,
+      }
+
+      latestAdd = { ...latestAdd, ...customObj }
+
+      console.log(latestAdd)
+    } else {
+      const occurence = cart.find((item) => item.name === obj.name)
+
+      occurence.quantity++
+
+      let customObj = {
+        [`"${obj.name}"`]: occurence.quantity,
+      }
+
+      latestAdd = { ...latestAdd, ...customObj }
+
+      console.log(latestAdd)
+      return occurence
+    }
+  }
+
+  for (const key in cartList) {
+    if (cartList.length !== prevCartListLength) {
+      const pointer = addToCart(cart, cartList[key])
+
+      let lol = { ...pointer }
+      console.log(lol)
+      const lmao = cart.find((item) => item.name === lol.name)
+
+      //console.log(lmao.quantity - cartList.length)
+    }
+  }
+
+  prevCartListLength = cartList.length
 }
 
 // Exercise 7
