@@ -205,73 +205,30 @@ const getOilDiscount = (cookingOil) => {
 }
 
 // Exercise 6
-let prevCartListLength
-let latestAdd = {}
 function generateCart() {
-  // Using the "cartlist" array that contains all the items in the shopping cart,
-  // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-
-  const addToCart = (arr, obj) => {
-    const found = arr.some((item) => item.name === obj.name)
-    if (!found) {
-      obj = { ...obj, ...{ quantity: 1 } }
-      arr.push(obj)
-
-      let customObj = {
-        [`"${obj.name}"`]: obj.quantity,
-      }
-      latestAdd = { ...latestAdd, ...customObj }
-      console.log(latestAdd)
-
-      console.log('else')
+  const reducer = (obj, val) => {
+    if (obj[val] == null) {
+      obj[val] = 1
     } else {
-      const occurence = cart.find((item) => item.name === obj.name)
-
-      if (occurence.quantity !== latestAdd[`"${occurence.name}"`]) {
-        let customObj = {
-          [`"${obj.name}"`]: occurence.quantity,
-        }
-
-        latestAdd = { ...latestAdd, ...customObj }
-
-        console.log('noelse')
-        console.log(latestAdd)
-      } else {
-        occurence.quantity++
-      }
-
-      return occurence
+      ++obj[val]
     }
+    return map
   }
 
-  for (const key in cartList) {
-    if (cartList.length !== prevCartListLength) {
-      addToCart(cart, cartList[key])
+  const quantities = cartList.map((item) => item.name).reduce(reducer, {})
+
+  const quantitiesKeys = Object.keys(quantities)
+
+  quantitiesKeys.map((key) => {
+    const occurence = cartList.find((item) => item.name === key)
+    occurence.quantity = quantities[key]
+
+    const itemFound = cart.some((item) => item.name === occurence.name)
+
+    if (!itemFound) {
+      cart.push(occurence)
     }
-  }
-
-  /*   cart.map((item) => {
-    if (item.quantity === latestAdd[`"${item.name}"`]) {
-      console.log(item.quantity)
-      console.log(latestAdd[`"${item.name}"`])
-      item.quantity -= latestAdd[`"${item.name}"`]
-
-      const obj = { quantity: latestAdd[`"${item.name}"`] }
-      item = { ...item, ...obj }
-    }
-
-    item.quantity += latestAdd[`"${item.name}"`]
-    latestAdd[`"${item.name}"`] = item.quantity + latestAdd[`"${item.name}"`]
   })
-
-  for (const key in cart) {
-    console.log(latestAdd[`"${cart[key].name}"`])
-    cart[key].quantity += latestAdd[`"${cart[key].name}"`]
-    if (latestAdd[`"${cart[key].name}"`] === cart[key].quantity) {
-      cart[key].quantity -= 2
-    }
-  } */
-  prevCartListLength = cartList.length
 }
 
 // Exercise 7
