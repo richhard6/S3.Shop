@@ -212,7 +212,7 @@ function generateCart() {
     } else {
       ++obj[val]
     }
-    return map
+    return obj
   }
 
   const quantities = cartList.map((item) => item.name).reduce(reducer, {})
