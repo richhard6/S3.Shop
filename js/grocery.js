@@ -179,14 +179,12 @@ const getCupcakeDiscount = (cupcakeMix) => {
   if (cupcakeMix > 10) {
     const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
 
-    console.log(twoThirdsDisc, 'quantity')
-    console.log(subtotal.grocery.value, 'value')
     const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
     if (prevCupcakeDiscount !== totalDiscount) {
       subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
       prevCupcakeDiscount = totalDiscount
+      return totalDiscount
     }
-    console.log(twoThirdsDisc)
   }
 }
 
@@ -200,6 +198,7 @@ const getOilDiscount = (cookingOil) => {
         countFourOilOcurrences * 10 - quantityToOilDiscount
       prevFourOilOcurrences = countFourOilOcurrences
       subtotal.grocery.discount += quantityToOilDiscount
+      return quantityToOilDiscount
     }
   }
 }
@@ -216,25 +215,44 @@ function generateCart() {
   }
 
   const quantities = cartList.map((item) => item.name).reduce(reducer, {})
-
   const quantitiesKeys = Object.keys(quantities)
 
   quantitiesKeys.map((key) => {
     const occurence = cartList.find((item) => item.name === key)
-    occurence.quantity = quantities[key]
-
     const itemFound = cart.some((item) => item.name === occurence.name)
 
     if (!itemFound) {
       cart.push(occurence)
     }
+
+    occurence.quantity = quantities[key]
+    occurence.subtotal = quantities[key] * occurence.price
+
+    if (!occurence.subtotalWithDiscount) {
+      occurence.subtotalWithDiscount = 0
+    }
+
+    if (occurence.name === 'cooking oil') {
+      let discount = getOilDiscount(occurence.quantity)
+      if (discount !== undefined) {
+        occurence.subtotalWithDiscount += discount
+      }
+    } else if (occurence.name === 'Instant cupcake mixture') {
+      let discount = getCupcakeDiscount(occurence.quantity)
+      if (discount !== undefined) {
+        let finalDiscount = discount - occurence.subtotalWithDiscount
+
+        console.log(finalDiscount)
+        occurence.subtotalWithDiscount += finalDiscount
+      }
+    }
   })
+
+  console.log(cart)
 }
 
 // Exercise 7
-function applyPromotionsCart() {
-  // Apply promotions to each item in the array "cart"
-}
+function applyPromotionsCart() {}
 
 // Exercise 8
 function addToCart(id) {
