@@ -129,12 +129,6 @@ const avoidRecalculation = (grocery, beauty, clothes) => {
 
 // Exercise 4
 function calculateTotal() {
-  /*   const totalCost = cartList
-    .map((item) => item.price)
-    .reduce((sum, val) => sum + val, 0)
-
-    console.log(totalCost)
-    */
   calculateSubtotals()
 
   let sum = 0
@@ -232,27 +226,37 @@ function generateCart() {
       occurence.subtotalWithDiscount = 0
     }
 
+    if (!occurence.discount) {
+      occurence.discount = 0
+    }
+
     if (occurence.name === 'cooking oil') {
       let discount = getOilDiscount(occurence.quantity)
       if (discount !== undefined) {
-        occurence.subtotalWithDiscount += discount
+        occurence.discount += discount
       }
     } else if (occurence.name === 'Instant cupcake mixture') {
       let discount = getCupcakeDiscount(occurence.quantity)
       if (discount !== undefined) {
-        let finalDiscount = discount - occurence.subtotalWithDiscount
+        let finalDiscount = discount - occurence.discount
 
         console.log(finalDiscount)
-        occurence.subtotalWithDiscount += finalDiscount
+        occurence.discount += finalDiscount
       }
     }
   })
-
+  applyPromotionsCart()
   console.log(cart)
 }
 
 // Exercise 7
-function applyPromotionsCart() {}
+function applyPromotionsCart() {
+  const finalSubtotal = (obj) => {
+    obj.subtotalWithDiscount = obj.subtotal - obj.discount
+  }
+
+  cart.forEach((item) => finalSubtotal(item))
+}
 
 // Exercise 8
 function addToCart(id) {
