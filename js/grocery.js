@@ -170,15 +170,14 @@ function applyPromotionsSubtotals() {
 const getCupcakeDiscount = (cupcakeMix) => {
   let quantityToCupcakeDiscount = cupcakeMix * products[2].price
 
-  if (cupcakeMix > 10) {
-    const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
+  const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
 
-    const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
-    if (prevCupcakeDiscount !== totalDiscount) {
-      subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
-      prevCupcakeDiscount = totalDiscount
-      return totalDiscount
-    }
+  const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
+
+  if (cupcakeMix > 10 && prevCupcakeDiscount !== totalDiscount) {
+    subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
+    prevCupcakeDiscount = totalDiscount
+    return totalDiscount
   }
 }
 
@@ -186,14 +185,17 @@ const getOilDiscount = (cookingOil) => {
   const countFourOilOcurrences = cookingOil / 4
   let quantityToOilDiscount = prevFourOilOcurrences * 10
 
-  if (countFourOilOcurrences !== prevFourOilOcurrences) {
-    if (cookingOil % 4 === 0) {
-      quantityToOilDiscount =
-        countFourOilOcurrences * 10 - quantityToOilDiscount
-      prevFourOilOcurrences = countFourOilOcurrences
-      subtotal.grocery.discount += quantityToOilDiscount
-      return quantityToOilDiscount
-    }
+  if (
+    countFourOilOcurrences !== prevFourOilOcurrences &&
+    cookingOil % 4 === 0
+  ) {
+    quantityToOilDiscount = countFourOilOcurrences * 10 - quantityToOilDiscount
+    prevFourOilOcurrences = countFourOilOcurrences
+
+    subtotal.grocery.discount += quantityToOilDiscount
+
+    console.log(quantityToOilDiscount)
+    return quantityToOilDiscount
   }
 }
 
@@ -259,15 +261,129 @@ function applyPromotionsCart() {
 }
 
 // Exercise 8
-function addToCart(id) {
-  // 1. Loop for to the array products to get the item to add to cart
-  // 2. Add found product to the cartList array
+function addToCart(itemToAdd) {
+  itemToAdd = products.find((item) => itemToAdd === item.name)
+
+  const itemFound = cart.some((item) => item.name === itemToAdd.name)
+
+  if (!itemFound) {
+    const newProperties = {
+      quantity: 1,
+
+      discount: 0,
+    }
+
+    itemToAdd = { ...itemToAdd, ...newProperties }
+    itemToAdd.subtotalWithDiscount = itemToAdd.price * itemToAdd.quantity
+    cart.push(itemToAdd)
+  } else {
+    addSinglePromotion(itemToAdd)
+    applyPromotionsCart()
+  }
+
+  console.log(cart)
 }
 
+const addSinglePromotion = (itemToAdd) => {
+  const occurence = cart.find((item) => item.name === itemToAdd.name)
+
+  occurence.quantity++
+
+  occurence.subtotal = occurence.quantity * occurence.price
+
+  if (occurence.name === 'cooking oil') {
+    let discount = getOilDiscount(occurence.quantity)
+    console.log(discount)
+    if (discount !== undefined) {
+      occurence.discount += discount
+    }
+  } else if (occurence.name === 'Instant cupcake mixture') {
+    let discount = getCupcakeDiscount(occurence.quantity)
+    if (discount !== undefined) {
+      let finalDiscount = discount - occurence.discount
+
+      occurence.discount += finalDiscount
+    }
+  }
+}
+
+//falta el instant cupcake mixture remove  promo
+
 // Exercise 9
-function removeFromCart(id) {
-  // 1. Loop for to the array products to get the item to add to cart
-  // 2. Add found product to the cartList array
+function removeFromCart(itemToRemove) {
+  itemToRemove = products.find((item) => itemToRemove === item.name)
+
+  const itemFound = cart.find((item) => item.name === itemToRemove.name)
+
+  if (itemFound) {
+    itemFound.quantity--
+
+    if (
+      itemFound.name !== 'cooking oil' &&
+      itemFound.name !== 'Instant cupcake mixture'
+    ) {
+      itemFound.subtotal -= itemFound.price
+      itemFound.subtotalWithDiscount -= itemFound.price
+
+      console.log('HeY')
+    }
+
+    if (itemFound.name === 'cooking oil') {
+      let discount = getOilDiscount(itemFound.quantity)
+
+      prevFourOilOcurrences = 0
+
+      let shouldDecrement = itemFound.quantity + 1
+
+      itemFound.subtotal -= itemFound.price
+
+      if (
+        discount === undefined &&
+        itemFound.discount !== 0 &&
+        shouldDecrement % 4 === 0
+      ) {
+        itemFound.discount -= 10
+        itemFound.subtotalWithDiscount = itemFound.subtotal - itemFound.discount
+      } else {
+        itemFound.subtotalWithDiscount = itemFound.subtotal - itemFound.discount
+      }
+    }
+
+    if (itemFound.name === 'Instant cupcake mixture') {
+      prevCupcakeDiscount = 0
+      let discount = getCupcakeDiscount(itemFound.quantity)
+
+      if (discount !== undefined && itemFound.discount !== 0) {
+        itemFound.discount = discount
+      } else {
+        itemFound.discount = 0
+
+        const quantityToCupcakeDiscount = 11 * products[2].price
+
+        const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
+
+        let totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
+
+        console.log(itemFound.quantity)
+
+        totalDiscount = itemFound.quantity < 10 ? 0 : totalDiscount
+
+        itemFound.subtotalWithDiscount += totalDiscount
+      }
+
+      console.log(discount, '?????')
+    }
+
+    if (itemFound.quantity === 0) {
+      const cartWithoutItem = cart.filter(
+        (item) => item.name !== itemFound.name
+      )
+
+      cart = cartWithoutItem
+    }
+  } else {
+    console.warn(`${itemToRemove.name} is not in your cart`)
+  }
 }
 
 // Exercise 10
