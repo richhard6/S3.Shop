@@ -274,7 +274,7 @@ function addToCart(itemToAdd) {
     }
 
     itemToAdd = { ...itemToAdd, ...newProperties }
-    itemToAdd.subtotalWithDiscount = itemToAdd.price * itemToAdd.quantity
+    itemToAdd.subtotalWithDiscount = itemToAdd.price
     cart.push(itemToAdd)
   } else {
     addSinglePromotion(itemToAdd)
@@ -307,8 +307,6 @@ const addSinglePromotion = (itemToAdd) => {
   }
 }
 
-//falta el instant cupcake mixture remove  promo
-
 // Exercise 9
 function removeFromCart(itemToRemove) {
   itemToRemove = products.find((item) => itemToRemove === item.name)
@@ -324,8 +322,6 @@ function removeFromCart(itemToRemove) {
     ) {
       itemFound.subtotal -= itemFound.price
       itemFound.subtotalWithDiscount -= itemFound.price
-
-      console.log('HeY')
     }
 
     if (itemFound.name === 'cooking oil') {
@@ -370,8 +366,6 @@ function removeFromCart(itemToRemove) {
 
         itemFound.subtotalWithDiscount += totalDiscount
       }
-
-      console.log(discount, '?????')
     }
 
     if (itemFound.quantity === 0) {
