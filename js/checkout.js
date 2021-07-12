@@ -1,9 +1,6 @@
 // Get the input fields
 
 const button = document.querySelector('.boton')
-
-const singleErrorInputs = document.querySelectorAll('[id^="single"]')
-
 const inputs = document.querySelectorAll('input')
 
 button.addEventListener('click', validate)
@@ -44,51 +41,29 @@ const handleInputsErrors = (input) => {
   const isEmail =
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
-  const values =
+  const validationAndMessage =
     ((input.value === '') === true && [true, 'field is required']) ||
     (input.value.length < 3 === true && [
       true,
       'field must be longer than 3 characters',
-    ])
+    ]) ||
+    (inputType.includes('Password') && [
+      isAlphanumeric,
+      'field must be alphanumeric',
+    ]) ||
+    (inputType.includes('Phone') && [
+      allNumber,
+      'field can`t contain letters',
+    ]) ||
+    (inputType.includes('Email') && [isEmail, 'field must be a valid email']) ||
+    (inputType.includes('Name') && [allLetters, 'field can`t contain numbers'])
 
-  if (values) {
-    const [value, errorMessage] = values
+  if (validationAndMessage) {
+    const [validation, errorMessage] = validationAndMessage
 
-    if (value) {
-      handleStyles(input, errorMessage, value)
-    }
-  }
-
-  if (input.value.length > 2) {
-    const validationAndMessage =
-      (inputType.includes('Password') && [
-        isAlphanumeric,
-        'field must be alphanumeric',
-      ]) ||
-      (inputType.includes('Phone') && [
-        allNumber,
-        'field can`t contain letters',
-      ]) ||
-      (inputType.includes('Email') && [
-        isEmail,
-        'field must be a valid email',
-      ]) ||
-      (inputType.includes('Name') && [
-        allLetters,
-        'field can`t contain numbers',
-      ])
-
-    if (validationAndMessage) {
-      const [validation, errorMessage] = validationAndMessage
-
-      new RegExp(validation)
-
-      handleStyles(input, errorMessage, validation)
-    }
-
-    if (inputType.includes('Address')) {
-      handleStyles(input)
-    }
+    handleStyles(input, errorMessage, validation)
+  } else {
+    handleStyles(input) // esto es por el address que no agarra cuando esta bien, hay que revisarlo
   }
 }
 
@@ -96,6 +71,10 @@ const handleStyles = (input, errorMessage, validation) => {
   const errorType = input.nextElementSibling?.dataset.errortype
 
   keyWord = errorMessage?.split(' ').pop()
+
+  new RegExp(validation)
+
+  console.log(validation)
 
   const finalValidation =
     (validation instanceof RegExp && !validation.test(input.value)) ||
