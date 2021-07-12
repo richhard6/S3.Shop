@@ -1,11 +1,7 @@
-// Get the input fields
-
 const button = document.querySelector('.boton')
 const inputs = document.querySelectorAll('input')
-
 button.addEventListener('click', validate)
 
-// Exercise 9
 function validate(e) {
   e.preventDefault()
   inputs.forEach(handleInputsErrors)
@@ -13,22 +9,14 @@ function validate(e) {
 
 const handleTextError = (input, message) => {
   const paragraph = document.createElement('small')
-
   paragraph.classList.add('text-danger')
   paragraph.classList.add('ml-3')
-
   const textContent = input.previousElementSibling.textContent.replace(':', '')
-
   const dataSet = message.split(' ')
-
   const keyWord = dataSet[dataSet.length - 1]
-
   paragraph.setAttribute('data-errortype', keyWord)
-
   const text = document.createTextNode(`${textContent} ${message}`)
-
   paragraph.appendChild(text)
-
   input.insertAdjacentElement('afterend', paragraph)
 }
 
@@ -56,25 +44,22 @@ const handleInputsErrors = (input) => {
       'field can`t contain letters',
     ]) ||
     (inputType.includes('Email') && [isEmail, 'field must be a valid email']) ||
-    (inputType.includes('Name') && [allLetters, 'field can`t contain numbers'])
+    (inputType.includes('Name') && [
+      allLetters,
+      'field can`t contain numbers',
+    ]) ||
+    (inputType.includes('Address') && [false])
 
   if (validationAndMessage) {
     const [validation, errorMessage] = validationAndMessage
-
     handleStyles(input, errorMessage, validation)
-  } else {
-    handleStyles(input) // esto es por el address que no agarra cuando esta bien, hay que revisarlo
   }
 }
 
 const handleStyles = (input, errorMessage, validation) => {
   const errorType = input.nextElementSibling?.dataset.errortype
-
   keyWord = errorMessage?.split(' ').pop()
-
   new RegExp(validation)
-
-  console.log(validation)
 
   const finalValidation =
     (validation instanceof RegExp && !validation.test(input.value)) ||
