@@ -8,19 +8,10 @@ const inputs = document.querySelectorAll('input')
 
 button.addEventListener('click', validate)
 
-const hasNumber = /^[0-9]*$/
-const includesNumber = /\d/ /*  cambiar nombres de aqui  */
-const isAlphanumeric = /\d[A-Z]|[A-Z]\d/i
-const isEmail =
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-
 // Exercise 9
 function validate(e) {
   e.preventDefault()
-
-  inputs.forEach(handleMultipleInputsError)
-
-  singleErrorInputs.forEach(handleSingleInputError)
+  inputs.forEach(handleInputsErrors)
 }
 
 const handleTextError = (input, message) => {
@@ -44,98 +35,90 @@ const handleTextError = (input, message) => {
   input.insertAdjacentElement('afterend', paragraph)
 }
 
-const handleSingleInputError = (input) => {
+const handleInputsErrors = (input) => {
+  const inputType = input.previousElementSibling.textContent
+
+  const allNumber = /^[0-9]*$/
+  const allLetters = /\b[^\d\W]+\b/
+  const isAlphanumeric = /\d[A-Z]|[A-Z]\d/i
+  const isEmail =
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+  const values =
+    ((input.value === '') === true && [true, 'field is required']) ||
+    (input.value.length < 3 === true && [
+      true,
+      'field must be longer than 3 characters',
+    ])
+
+  if (values) {
+    const [value, errorMessage] = values
+
+    if (value) {
+      handleStyles(input, errorMessage, value)
+    }
+  }
+
   if (input.value.length > 2) {
-    const inputType = input.previousElementSibling.textContent
-    const errorType = input.nextElementSibling?.dataset.errortype
+    const validationAndMessage =
+      (inputType.includes('Password') && [
+        isAlphanumeric,
+        'field must be alphanumeric',
+      ]) ||
+      (inputType.includes('Phone') && [
+        allNumber,
+        'field can`t contain letters',
+      ]) ||
+      (inputType.includes('Email') && [
+        isEmail,
+        'field must be a valid email',
+      ]) ||
+      (inputType.includes('Name') && [
+        allLetters,
+        'field can`t contain numbers',
+      ])
 
-    const validation = new RegExp(
-      (inputType.includes('Password') && isAlphanumeric) ||
-        (inputType.includes('Phone') && hasNumber) ||
-        (inputType.includes('Email') && isEmail)
-    )
+    if (validationAndMessage) {
+      const [validation, errorMessage] = validationAndMessage
 
-    //podria mejorar. y arreglar regexp de email para que si no tiene .com no sirva
-    const errorMessage =
-      (inputType.includes('Password') && 'field must be alphanumeric') ||
-      (inputType.includes('Phone') && 'field can`t contain letters') ||
-      (inputType.includes('Email') && 'field must be a valid email')
+      new RegExp(validation)
 
-    const keyWord = errorMessage.split(' ').pop()
+      handleStyles(input, errorMessage, validation)
+    }
 
-    if (!validation.test(input.value)) {
-      input.classList.replace('is-valid', 'is-invalid')
-      input.focus()
-      if (!errorType) {
-        handleTextError(input, errorMessage)
-        input.focus()
-      }
-
-      if (errorType && errorType !== keyWord) {
-        input.nextElementSibling.remove()
-        handleTextError(input, errorMessage)
-        input.focus()
-      }
-    } else {
-      input.classList.replace('is-invalid', 'is-valid')
-      if (input.nextElementSibling) {
-        input.nextElementSibling.remove()
-      }
+    if (inputType.includes('Address')) {
+      handleStyles(input)
     }
   }
 }
 
-const handleMultipleInputsError = (input) => {
+const handleStyles = (input, errorMessage, validation) => {
   const errorType = input.nextElementSibling?.dataset.errortype
-  const inputType = input.previousElementSibling.textContent
 
-  if (input.value === '') {
+  keyWord = errorMessage?.split(' ').pop()
+
+  const finalValidation =
+    (validation instanceof RegExp && !validation.test(input.value)) ||
+    (validation === true && true)
+
+  if (finalValidation) {
     input.classList.add('is-invalid')
     input.classList.remove('is-valid')
-
-    if (!errorType) handleTextError(input, 'field is required')
-
-    if (errorType && errorType !== 'required') {
-      input.nextElementSibling.remove()
-      handleTextError(input, 'field is required')
+    input.focus()
+    if (!errorType) {
+      handleTextError(input, errorMessage)
+      input.focus()
     }
 
-    input.focus()
-  } else if (input.value.length < 3) {
-    input.classList.add('is-invalid')
-    input.classList.remove('is-valid')
-
-    if (!errorType)
-      handleTextError(input, 'field must be longer than 3 characters')
-
-    if (errorType && errorType !== 'characters') {
+    if (errorType && errorType !== keyWord) {
       input.nextElementSibling.remove()
-
-      handleTextError(input, 'field must be longer than 3 characters')
+      handleTextError(input, errorMessage)
+      input.focus()
     }
-
-    input.focus()
-  } else if (
-    input.value.length > 2 &&
-    inputType.includes('Name') &&
-    includesNumber.test(input.value)
-  ) {
-    input.classList.add('is-invalid')
-    input.classList.remove('is-valid')
-    if (!errorType) handleTextError(input, 'field can`t contain numbers')
-
-    if (errorType && errorType !== 'numbers') {
-      input.nextElementSibling.remove()
-      handleTextError(input, 'field can`t contain numbers')
-    }
-
-    input.focus()
   } else {
     input.classList.remove('is-invalid')
     input.classList.add('is-valid')
-
     if (input.nextElementSibling) {
-      console.log(input.nextElementSibling)
       input.nextElementSibling.remove()
     }
   }
