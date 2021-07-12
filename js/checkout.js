@@ -20,6 +20,7 @@ const handleTextError = (input, message) => {
   input.insertAdjacentElement('afterend', paragraph)
 }
 
+//testtoken
 const handleInputsErrors = (input) => {
   const inputType = input.previousElementSibling.textContent
 
