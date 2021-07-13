@@ -20,7 +20,6 @@ const handleTextError = (input, message) => {
   input.insertAdjacentElement('afterend', paragraph)
 }
 
-//testtoken
 const handleInputsErrors = (input) => {
   const inputType = input.previousElementSibling.textContent
 
@@ -28,7 +27,7 @@ const handleInputsErrors = (input) => {
   const allLetters = /\b[^\d\W]+\b/
   const isAlphanumeric = /\d[A-Z]|[A-Z]\d/i
   const isEmail =
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*.*\.{1}[a-z]+$/
 
   const validationAndMessage =
     ((input.value === '') === true && [true, 'field is required']) ||

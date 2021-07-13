@@ -1,55 +1,22 @@
-// Exercise 11
-// Move this variable to a json file and load the data in this js
-var products = [
-  {
-    name: 'cooking oil',
-    price: 10.5,
-    type: 'grocery',
-  },
-  {
-    name: 'Pasta',
-    price: 6.25,
-    type: 'grocery',
-  },
-  {
-    name: 'Instant cupcake mixture',
-    price: 5,
-    type: 'grocery',
-  },
-  {
-    name: 'All-in-one',
-    price: 260,
-    type: 'beauty',
-  },
-  {
-    name: 'Zero Make-up Kit',
-    price: 20.5,
-    type: 'beauty',
-  },
-  {
-    name: 'Lip Tints',
-    price: 12.75,
-    type: 'beauty',
-  },
-  {
-    name: 'Lawn Dress',
-    price: 15,
-    type: 'clothes',
-  },
-  {
-    name: 'Lawn-Chiffon Combo',
-    price: 19.99,
-    type: 'clothes',
-  },
-  {
-    name: 'Toddler Frock',
-    price: 9.99,
-    type: 'clothes',
-  },
-]
-var cartList = []
-var cart = []
-var subtotal = {
+const list = document.querySelector('.list')
+
+const addToCartButton = document.querySelectorAll('.card button')
+
+//ojo con el botton X del modal que se esta ejecutnado
+
+addToCartButton.forEach((product) =>
+  product.addEventListener('click', selectItem)
+)
+
+let products
+
+fetch('./js/products.json')
+  .then((response) => response.json())
+  .then((data) => (products = data))
+
+let cartList = []
+let cart = []
+const subtotal = {
   grocery: {
     value: 0,
     discount: 0,
@@ -63,7 +30,8 @@ var subtotal = {
     discount: 0,
   },
 }
-var total = 0
+
+let total = 0
 
 // Exercise 1
 function addToCartList(item) {
@@ -135,7 +103,7 @@ function calculateTotal() {
   for (const kind in subtotal) {
     sum += subtotal[kind].value - subtotal[kind].discount
   }
-  console.log(sum)
+  total = sum
 }
 
 // Exercise 5
@@ -264,6 +232,8 @@ function applyPromotionsCart() {
 function addToCart(itemToAdd) {
   itemToAdd = products.find((item) => itemToAdd === item.name)
 
+  itemToAdd.subtotal = itemToAdd.price
+
   const itemFound = cart.some((item) => item.name === itemToAdd.name)
 
   if (!itemFound) {
@@ -380,7 +350,103 @@ function removeFromCart(itemToRemove) {
   }
 }
 
-// Exercise 10
-function printCart() {
+function selectItem(e) {
+  const itemToAdd = e.target.parentElement.firstChild.nextSibling.textContent
+
+  addToCart(itemToAdd)
+
+  const itemToPrint = cart.find((item) => item.name === itemToAdd)
+
+  printCart(itemToPrint)
+}
+
+function printCart(item) {
+  const listItem = document.createElement('li')
+  let classesToAdd = [
+    'list-group-item',
+    'd-flex',
+    'justify-content-between',
+    'align-items-center',
+  ]
+
+  listItem.classList.add(...classesToAdd)
+
+  for (let i = 0; i < 5; i++) {
+    let quantityClasses = ['badge', 'bg-primary', 'rounded-pill']
+
+    let notNameDivClasses = [
+      'd-flex',
+      'justify-content-center',
+      'align-items-center',
+      'col-2',
+      'h-100',
+    ]
+
+    const div = document.createElement('div')
+
+    const textElement =
+      (i === 4 && document.createTextNode(item.quantity)) ||
+      (i === 3 && document.createTextNode(item.subtotal + '$')) ||
+      (i === 2 && document.createTextNode(item.discount)) ||
+      (i === 1 && document.createTextNode(item.name))
+
+    if (i === 4) {
+      div.classList.add(...quantityClasses)
+      const button = document.createElement('button')
+      button.classList.add('minus-button')
+      const buttonText = document.createTextNode('-')
+      button.appendChild(buttonText)
+
+      div.appendChild(button)
+      button.addEventListener('click', () => {
+        removeFromCart(item.name)
+
+        const itemToPrint = cart.find((object) => object.name === item.name)
+
+        printCart(itemToPrint)
+      })
+    }
+
+    if (i === 1) {
+      div.classList.add('col-5')
+    } else {
+      div.classList.add(...notNameDivClasses)
+    }
+
+    if (textElement) {
+      div.appendChild(textElement)
+
+      if (i === 4) {
+        const button = document.createElement('button')
+        button.classList.add('plus-button')
+        const buttonText = document.createTextNode('+')
+        button.appendChild(buttonText)
+        div.appendChild(button)
+        button.addEventListener('click', () => {
+          addToCart(item.name)
+
+          const itemToPrint = cart.find((object) => object.name === item.name)
+
+          printCart(itemToPrint)
+        })
+      }
+
+      listItem.appendChild(div)
+    }
+  }
+
+  console.log(listItem)
+
+  listItem.setAttribute('data-itemtype', item.name)
+
+  list.appendChild(listItem)
+
+  const foundItem = list.querySelector(`li[data-itemtype="${item.name}"]`)
+
+  if (foundItem) {
+    console.log(listItem)
+
+    list.replaceChild(listItem, foundItem)
+  }
   // Fill the shopping cart modal manipulating the shopping cart dom
 }
