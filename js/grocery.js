@@ -1,14 +1,13 @@
 const list = document.querySelector('.list')
-
 const addToCartButton = document.querySelectorAll('.card button')
-
-//ojo con el botton X del modal que se esta ejecutnado
-
-addToCartButton.forEach((product) =>
-  product.addEventListener('click', selectItem)
-)
-
+const toast = document.querySelector('#liveToast')
+const toastText = toast.querySelector('.toast-body')
 let products
+
+addToCartButton.forEach((product) => {
+  product.addEventListener('click', selectItem)
+  product.setAttribute('id', 'liveToastBtn')
+})
 
 fetch('./js/products.json')
   .then((response) => response.json())
@@ -31,7 +30,13 @@ const subtotal = {
   },
 }
 
-let total = 0
+let total = 0 //hay que sumar todos los subtotalwithdiscount para ponerlo debjao del carrito y en el checkout.
+//mejor creando una nueva funcion que la que hay de calcualte totals...
+// y tal vez un clear all CART items. y poner un boton en el modal
+//localStorage para tener el total y los items con sus imagenes y cantidades en
+//el checkout.
+//se podria refactorizar algo de este grocery.js
+//y finalmente.,. ponerlo bien con sus mediaqueries y mejora de estilo.
 
 // Exercise 1
 function addToCartList(item) {
@@ -232,6 +237,8 @@ function applyPromotionsCart() {
 function addToCart(itemToAdd) {
   itemToAdd = products.find((item) => itemToAdd === item.name)
 
+  toastText.innerText = `${itemToAdd.name} has been added to your cart`
+
   itemToAdd.subtotal = itemToAdd.price
 
   const itemFound = cart.some((item) => item.name === itemToAdd.name)
@@ -278,10 +285,13 @@ const addSinglePromotion = (itemToAdd) => {
 }
 
 // Exercise 9
+let lastToRemove
 function removeFromCart(itemToRemove) {
   itemToRemove = products.find((item) => itemToRemove === item.name)
 
   const itemFound = cart.find((item) => item.name === itemToRemove.name)
+
+  toastText.innerText = `${itemFound.name} has been removed from your cart`
 
   if (itemFound) {
     itemFound.quantity--
@@ -323,17 +333,10 @@ function removeFromCart(itemToRemove) {
         itemFound.discount = discount
       } else {
         itemFound.discount = 0
-
         const quantityToCupcakeDiscount = 11 * products[2].price
-
         const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
-
         let totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
-
-        console.log(itemFound.quantity)
-
         totalDiscount = itemFound.quantity < 10 ? 0 : totalDiscount
-
         itemFound.subtotalWithDiscount += totalDiscount
       }
     }
@@ -342,7 +345,7 @@ function removeFromCart(itemToRemove) {
       const cartWithoutItem = cart.filter(
         (item) => item.name !== itemFound.name
       )
-
+      lastToRemove = itemFound.name
       cart = cartWithoutItem
     }
   } else {
@@ -360,7 +363,19 @@ function selectItem(e) {
   printCart(itemToPrint)
 }
 
+let timer
+
 function printCart(item) {
+  const itemToRemove = document.querySelector(
+    `li[data-itemtype="${lastToRemove}"]`
+  )
+  if (!item) return itemToRemove.remove()
+  const textToRemove = document.querySelector('.bill')
+  const buttonMinus = document.createElement('button')
+  const buttonPlus = document.createElement('button')
+
+  if (textToRemove) textToRemove.remove()
+
   const listItem = document.createElement('li')
   let classesToAdd = [
     'list-group-item',
@@ -392,19 +407,12 @@ function printCart(item) {
 
     if (i === 4) {
       div.classList.add(...quantityClasses)
-      const button = document.createElement('button')
-      button.classList.add('minus-button')
+
+      buttonMinus.classList.add('minus-button')
       const buttonText = document.createTextNode('-')
-      button.appendChild(buttonText)
-
-      div.appendChild(button)
-      button.addEventListener('click', () => {
-        removeFromCart(item.name)
-
-        const itemToPrint = cart.find((object) => object.name === item.name)
-
-        printCart(itemToPrint)
-      })
+      buttonMinus.appendChild(buttonText)
+      buttonMinus.classList.add('me-1')
+      div.appendChild(buttonMinus)
     }
 
     if (i === 1) {
@@ -417,36 +425,46 @@ function printCart(item) {
       div.appendChild(textElement)
 
       if (i === 4) {
-        const button = document.createElement('button')
-        button.classList.add('plus-button')
+        buttonPlus.classList.add('plus-button')
         const buttonText = document.createTextNode('+')
-        button.appendChild(buttonText)
-        div.appendChild(button)
-        button.addEventListener('click', () => {
-          addToCart(item.name)
-
-          const itemToPrint = cart.find((object) => object.name === item.name)
-
-          printCart(itemToPrint)
-        })
+        buttonPlus.appendChild(buttonText)
+        buttonPlus.classList.add('ms-1')
+        div.appendChild(buttonPlus)
       }
 
       listItem.appendChild(div)
     }
   }
 
-  console.log(listItem)
-
   listItem.setAttribute('data-itemtype', item.name)
+
+  const toastClasses = ['toast', 'hide']
+
+  //mejorar esto para que haga un fade in y se vea mejor.. Refactorizr todo esto tambien podria ser
+
+  //falta sacar el total, en alguna funcion que sume todos los subtotales with discount y print en el DOM cart
+  //Total : blabla
+
+  buttonMinus.addEventListener('click', () => {
+    removeFromCart(item.name)
+    const itemToPrint = cart.find((object) => object.name === item.name)
+    printCart(itemToPrint)
+  })
+  buttonPlus.addEventListener('click', () => {
+    addToCart(item.name)
+    const itemToPrint = cart.find((object) => object.name === item.name)
+    printCart(itemToPrint)
+  })
+
+  toast.classList.remove(...toastClasses)
+  timer = setTimeout(() => {
+    window.clearTimeout(timer)
+    toast.classList.add(...toastClasses)
+  }, 2000)
 
   list.appendChild(listItem)
 
   const foundItem = list.querySelector(`li[data-itemtype="${item.name}"]`)
 
-  if (foundItem) {
-    console.log(listItem)
-
-    list.replaceChild(listItem, foundItem)
-  }
-  // Fill the shopping cart modal manipulating the shopping cart dom
+  if (foundItem) list.replaceChild(listItem, foundItem)
 }

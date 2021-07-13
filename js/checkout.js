@@ -9,8 +9,10 @@ function validate(e) {
 
 const handleTextError = (input, message) => {
   const paragraph = document.createElement('small')
-  paragraph.classList.add('text-danger')
-  paragraph.classList.add('ml-3')
+
+  const classesToAdd = ['text-danger', 'ml-3']
+  paragraph.classList.add(...classesToAdd)
+
   const textContent = input.previousElementSibling.textContent.replace(':', '')
   const dataSet = message.split(' ')
   const keyWord = dataSet[dataSet.length - 1]
@@ -22,6 +24,7 @@ const handleTextError = (input, message) => {
 
 const handleInputsErrors = (input) => {
   const inputType = input.previousElementSibling.textContent
+  input.value = input.value.trim()
 
   const allNumber = /^[0-9]*$/
   const allLetters = /\b[^\d\W]+\b/

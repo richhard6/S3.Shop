@@ -30,7 +30,7 @@
     <nav class="navbar navbar-expand-md bg-secondary sticky-top">
       <a class="navbar-brand text-white" href="index.html"
         ><span><i class="fas fa-shopping-cart mr-2"></i></span>
-        <span>Volver</span>
+        <span>back</span>
       </a>
       <button
         class="navbar-toggler"
@@ -60,6 +60,28 @@
         </ul>
       </div>
     </nav>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div
+        id="liveToast"
+        class="toast hide"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header">
+          <img src="..." class="rounded me-2" alt="..." />
+          <strong class="me-auto">ShopNow</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body bg-dark text-white"></div>
+      </div>
+    </div>
 
     <h1 class="text-center mt-3 m-5">Welcome to the ShopNow</h1>
 
