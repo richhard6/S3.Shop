@@ -1,19 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
 body {
   font-family: Poppins;
 }
+
+:root {
+  --main-color: #00bfa6;
+}
 /* navbar */
-.navbar {
-  background-color: rgb(43, 43, 43) !important;
-}
-.nav-link {
-  color: rgb(255, 255, 255);
-  font-size: 20px;
-  font-weight: bold;
-}
-.nav-link:hover {
-  color: white;
-}
+
 .grocery-img {
   width: 60%;
   margin: 1rem auto;
@@ -26,5 +21,40 @@ body {
 }
 
 .modalClose {
+  cursor: pointer;
+}
+
+.navbar {
+  background-color: var(--main-color);
+}
+
+.btn {
+  background-color: var(--main-color);
+  border: none;
+}
+
+.btn:hover {
+  background-color: var(--main-color);
+}
+
+.btn:focus {
+  background-color: var(--main-color);
+}
+
+footer {
+  background-color: var(--main-color);
+  color: white;
+}
+
+footer a {
+  text-decoration: none;
+  color: white;
+}
+
+footer a:hover {
+  color: white;
+}
+
+.fab {
   cursor: pointer;
 }

@@ -27,233 +27,302 @@
 
   <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-md bg-secondary sticky-top">
-      <a class="navbar-brand text-white" href="index.html"
-        ><span><i class="fas fa-shopping-cart mr-2"></i></span>
-        <span>back</span>
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <div class="container-fluid p-0">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid d-flex">
+          <a class="navbar-brand" href="#">ShopNow</a>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a
-              class="nav-link text-white btn"
-              id="cart"
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#cartModal"
-              href="#beauty"
-              ><i class="fas fa-cart-arrow-down"></i> My Cart</a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-      <div
-        id="liveToast"
-        class="toast hide"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        <div class="toast-header">
-          <img src="..." class="rounded me-2" alt="..." />
-          <strong class="me-auto">ShopNow</strong>
+          <div class="justify-content-end order-lg-1">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link text-white btn"
+                  id="cart"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cartModal"
+                  href="#beauty"
+                  ><i class="fas fa-cart-arrow-down"></i> My Cart</a
+                >
+              </li>
+            </ul>
+          </div>
           <button
+            class="navbar-toggler"
             type="button"
-            class="btn-close"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="toast-body bg-dark text-white"></div>
-      </div>
-    </div>
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="grocery.html"
+                  >Shop</a
+                >
+              </li>
 
-    <h1 class="text-center mt-3 m-5">Welcome to the ShopNow</h1>
-
-    <!-- Grocery part -->
-    <section>
-      <h2 class="text-center">
-        <i class="fas fa-shopping-basket mr-2"></i>Grocery
-      </h2>
-      <div id="grocery" class="row ml-3 m-5">
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">cooking oil</h5>
-            <h1 class="card-text">$10.5</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
           </div>
         </div>
+      </nav>
 
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Pasta</h5>
-            <h1 class="card-text">$6.25</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
+      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div
+          id="liveToast"
+          class="toast hide"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="..." />
+            <strong class="me-auto">ShopNow</strong>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
           </div>
-        </div>
-
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Instant cupcake mixture</h5>
-            <h1 class="card-text">$5</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- beauty part -->
-    <section>
-      <h2 class="text-center"><i class="fas fa-heart mr-2"></i>Beauty</h2>
-      <div id="beauty" class="row ml-3 m-5">
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">All-in-1</h5>
-            <h1 class="card-text">$260</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
-        </div>
-
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Zero makeup kit</h5>
-            <h1 class="card-text">$20.5</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
-        </div>
-
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Lip tints</h5>
-            <h1 class="card-text">$12.75</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
+          <div class="toast-body bg-dark text-white"></div>
         </div>
       </div>
-    </section>
 
-    <!-- clothes part -->
-    <section>
-      <h2 class="text-center"><i class="fas fa-tshirt mr-2"></i>Clothes</h2>
-      <div id="clothes" class="row ml-3 m-5">
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Lawn dress</h5>
-            <h1 class="card-text">$15</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
-        </div>
+      <h1 class="text-center mt-3 m-5"></h1>
 
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Lawn-chiffon combo</h5>
-            <h1 class="card-text">$19.99</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
-        </div>
-
-        <div class="card col-sm-3 m-1 ml-5 p-4" style="width: 18rem">
-          <img src="./images/product.svg" class="grocery-img" />
-          <div class="card-body text-center">
-            <h5 class="card-title">Toddler Frock</h5>
-            <h1 class="card-text">$9.99</h1>
-            <button type="button" class="btn btn-primary">Add to cart</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- modal -->
-    <aside>
-      <div
-        class="modal fade"
-        id="cartModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="cartModalTitle"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="cartModalScrollableTitle">
-                <i class="fas fa-cart-arrow-down"></i>My Cart
-              </h5>
-
-              <span
-                class="modalClose"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                aria-hidden="true"
-                >&times;</span
-              >
+      <!-- Grocery part -->
+      <section>
+        <h2 class="text-center">
+          <i class="fas fa-shopping-basket mr-2"></i>Grocery
+        </h2>
+        <div
+          id="grocery"
+          class="
+            d-flex
+            flex-column flex-md-row
+            ml-3
+            m-5
+            justify-content-between
+          "
+        >
+          <div class="card col-12 col-md-3 m-1 ml-5 p-4">
+            <img src="./images/oil.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Cooking oil</h5>
+              <h1 class="card-text">$10.5</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
             </div>
-            <div class="modal-body">
-              <!-- listing items starts -->
-              <div>
-                <ul class="list-group list">
-                  <li
-                    class="
-                      list-group-item
-                      d-flex
-                      justify-content-between
-                      align-items-center
-                    "
-                  >
-                    <div class="fw-bold col-5">Name</div>
-                    <div class="fw-bold col-2">Discount</div>
+          </div>
 
-                    <div class="fw-bold col-2">Subtotal</div>
-                    <div class="fw-bold col-2">Quantity</div>
-                  </li>
-                </ul>
-                <div>
-                  <h3 class="text-center bill px-5">Select Something</h3>
-                </div>
-                <div class="text-center">
-                  <a href="checkout.html" class="btn btn-primary m-3"
-                    >Checkout</a
-                  >
-                </div>
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img class="img-fluid" src="./images/pasta.jpg" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Pasta</h5>
+              <h1 class="card-text">$6.25</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/cupcake.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Instant cupcake mixture</h5>
+              <h1 class="card-text">$5</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- beauty part -->
+      <section>
+        <h2 class="text-center"><i class="fas fa-heart mr-2"></i>Beauty</h2>
+        <div
+          id="beauty"
+          class="
+            d-flex
+            flex-column flex-md-row
+            ml-3
+            m-5
+            justify-content-between
+          "
+        >
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/allinone.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">All-in-1</h5>
+              <h1 class="card-text">$260</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/makeups.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Zero makeup kit</h5>
+              <h1 class="card-text">$20.5</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/lipstick.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Lip tints</h5>
+              <h1 class="card-text">$12.75</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- clothes part -->
+      <section>
+        <h2 class="text-center"><i class="fas fa-tshirt mr-2"></i>Clothes</h2>
+        <div
+          id="clothes"
+          class="
+            d-flex
+            flex-column flex-md-row
+            ml-3
+            m-5
+            justify-content-between
+          "
+        >
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/lawndress.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Lawn dress</h5>
+              <h1 class="card-text">$15</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/chiffon.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Lawn-chiffon combo</h5>
+              <h1 class="card-text">$19.99</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+
+          <div class="card m-1 col-12 col-md-3 ml-5 p-4">
+            <img src="./images/baby.jpg" class="img-fluid" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Toddler Frock</h5>
+              <h1 class="card-text">$9.99</h1>
+              <button type="button" class="btn btn-primary">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- modal -->
+      <aside>
+        <div
+          class="modal fade"
+          id="cartModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="cartModalTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="cartModalScrollableTitle">
+                  <i class="fas fa-cart-arrow-down"></i>My Cart
+                </h5>
+
+                <span
+                  class="modalClose"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  aria-hidden="true"
+                  >&times;</span
+                >
               </div>
-              <!-- listing items ends -->
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
+              <div class="modal-body">
+                <!-- listing items starts -->
+                <div>
+                  <ul class="list-group list">
+                    <li
+                      class="
+                        list-group-item
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                      "
+                    >
+                      <div class="fw-bold col-5">Name</div>
+                      <div class="fw-bold col-2">Discount</div>
+
+                      <div class="fw-bold col-2">Subtotal</div>
+                      <div class="fw-bold col-2">Quantity</div>
+                    </li>
+                  </ul>
+                  <div>
+                    <h3 class="text-center bill px-5">Select Something</h3>
+                    <h3 class="total text-center"></h3>
+                  </div>
+                  <div class="text-center">
+                    <a href="checkout.html" class="btn btn-primary m-3"
+                      >Checkout</a
+                    >
+                  </div>
+                </div>
+                <!-- listing items ends -->
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+      <footer class="p-3">
+        <div class="row">
+          <div class="col-12 col-md-4 text-center"><h4>ShopNow</h4></div>
+          <div class="col-12 col-md-4 d-flex justify-content-around">
+            <a href="">Grocery</a><a href="">Beauty</a><a href="">Clothes</a>
+          </div>
+          <div class="col-12 col-md-4 mt-2 d-flex justify-content-around">
+            <i class="fab fa-instagram"></i><i class="fab fa-facebook"></i
+            ><i class="fab fa-twitter"></i>
+          </div>
+        </div>
+        <hr />
+        <div class="row mt-2 fs-7">
+          <div class="col-6 text-center fw-lighter">
+            © 2021 ShopNow. All rights reserved
+          </div>
+          <div class="col-6 d-flex justify-content-evenly fw-lighter">
+            <a href="">Terms and Conditions</a><a href="">Privacy Policy</a>
+          </div>
+        </div>
+      </footer>
+    </div>
 
     <!-- script tags -->
     <script

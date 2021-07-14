@@ -30,13 +30,12 @@ const subtotal = {
   },
 }
 
-let total = 0 //hay que sumar todos los subtotalwithdiscount para ponerlo debjao del carrito y en el checkout.
-//mejor creando una nueva funcion que la que hay de calcualte totals...
+let total = 0
 // y tal vez un clear all CART items. y poner un boton en el modal
 //localStorage para tener el total y los items con sus imagenes y cantidades en
 //el checkout.
 //se podria refactorizar algo de este grocery.js
-//y finalmente.,. ponerlo bien con sus mediaqueries y mejora de estilo.
+//hay que arreglar la cantidad para que no muestre mas de 3 decimales.
 
 // Exercise 1
 function addToCartList(item) {
@@ -124,10 +123,10 @@ function applyPromotionsSubtotals() {
   cartList
     .filter(
       (item) =>
-        item.name === 'cooking oil' || item.name === 'Instant cupcake mixture'
+        item.name === 'Cooking oil' || item.name === 'Instant cupcake mixture'
     )
     .map((item) =>
-      item.name === 'cooking oil'
+      item.name === 'Cooking oil'
         ? itemsQuantity.cookingOil++
         : itemsQuantity.cupcakeMix++
     )
@@ -205,7 +204,7 @@ function generateCart() {
       occurence.discount = 0
     }
 
-    if (occurence.name === 'cooking oil') {
+    if (occurence.name === 'Cooking oil') {
       let discount = getOilDiscount(occurence.quantity)
       if (discount !== undefined) {
         occurence.discount += discount
@@ -268,7 +267,7 @@ const addSinglePromotion = (itemToAdd) => {
 
   occurence.subtotal = occurence.quantity * occurence.price
 
-  if (occurence.name === 'cooking oil') {
+  if (occurence.name === 'Cooking oil') {
     let discount = getOilDiscount(occurence.quantity)
     console.log(discount)
     if (discount !== undefined) {
@@ -297,14 +296,14 @@ function removeFromCart(itemToRemove) {
     itemFound.quantity--
 
     if (
-      itemFound.name !== 'cooking oil' &&
+      itemFound.name !== 'Cooking oil' &&
       itemFound.name !== 'Instant cupcake mixture'
     ) {
       itemFound.subtotal -= itemFound.price
       itemFound.subtotalWithDiscount -= itemFound.price
     }
 
-    if (itemFound.name === 'cooking oil') {
+    if (itemFound.name === 'Cooking oil') {
       let discount = getOilDiscount(itemFound.quantity)
 
       prevFourOilOcurrences = 0
@@ -353,7 +352,15 @@ function removeFromCart(itemToRemove) {
   }
 }
 
+const addSubtotalsWithDiscount = () => {
+  const reducer = (sum, currentVal) => sum + currentVal
+  const total = cart.map((item) => item.subtotalWithDiscount).reduce(reducer)
+  const totalDOM = document.querySelector('.total')
+  totalDOM.innerText = total + '$'
+}
+
 function selectItem(e) {
+  //ojo con esto al cambiar el layout s
   const itemToAdd = e.target.parentElement.firstChild.nextSibling.textContent
 
   addToCart(itemToAdd)
@@ -442,18 +449,17 @@ function printCart(item) {
 
   //mejorar esto para que haga un fade in y se vea mejor.. Refactorizr todo esto tambien podria ser
 
-  //falta sacar el total, en alguna funcion que sume todos los subtotales with discount y print en el DOM cart
-  //Total : blabla
-
   buttonMinus.addEventListener('click', () => {
     removeFromCart(item.name)
     const itemToPrint = cart.find((object) => object.name === item.name)
     printCart(itemToPrint)
+    addSubtotalsWithDiscount()
   })
   buttonPlus.addEventListener('click', () => {
     addToCart(item.name)
     const itemToPrint = cart.find((object) => object.name === item.name)
     printCart(itemToPrint)
+    addSubtotalsWithDiscount()
   })
 
   toast.classList.remove(...toastClasses)
@@ -465,6 +471,8 @@ function printCart(item) {
   list.appendChild(listItem)
 
   const foundItem = list.querySelector(`li[data-itemtype="${item.name}"]`)
+
+  addSubtotalsWithDiscount()
 
   if (foundItem) list.replaceChild(listItem, foundItem)
 }
