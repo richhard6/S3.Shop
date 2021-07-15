@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- bootstrap -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
 
@@ -25,109 +25,238 @@
   </head>
 
   <body>
-    <!-- header -->
-    <h1 class="text-center head m-4">Checkout Page</h1>
-    <!-- header -->
-    <!-- icons starts here -->
-    <div class="icons">
-      <div class="row mr-0">
-        <div class="col-sm-6">
-          <h2 class="my-3 mx-5 bord shadow">
-            <i class="fas fa-dollar-sign bg p-4 mr-4"></i>Cash on Delivery
-          </h2>
+    <div class="container-fluid p-0">
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">ShopNow</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="grocery.html">Shop</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <h2 class="my-3 mx-5 bord shadow">
-            <i class="fas fa-arrows-alt-h bg p-4 mr-4"></i>100% Return
-          </h2>
+      </nav>
+
+      <div
+        class="
+          checkout-main-picture
+          d-flex
+          justify-content-center
+          align-items-center
+          flex-column
+        "
+      >
+        <div class="row row-features w-100 fs-4 text-white">
+          <div class="col-6 col-md-3">
+            <div
+              class="
+                features-a
+                d-flex
+                justify-content-center
+                align-items-center
+                flex-column
+              "
+            >
+              <i class="fas fa-hand-holding-usd mb-2 mt-3"></i>
+              <h3 class="fw-light">Cash on Delivery</h3>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div
+              class="
+                features-b
+                d-flex
+                justify-content-center
+                align-items-center
+                flex-column
+              "
+            >
+              <i class="fas fa-undo-alt mb-2 mt-3"></i>
+              <h3 class="fw-light">100% Returnable</h3>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div
+              class="
+                features-a
+                d-flex
+                justify-content-center
+                align-items-center
+                flex-column
+              "
+            >
+              <i class="fas fa-award mb-2 mt-3"></i>
+              <h3 class="fw-light">Quality Assured</h3>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div
+              class="
+                features-b
+                d-flex
+                justify-content-center
+                align-items-center
+                flex-column
+              "
+            >
+              <i class="fas fa-space-shuttle mb-2 mt-3"></i>
+              <h3 class="fw-light">Delivery on time</h3>
+            </div>
+          </div>
         </div>
+        <h1 class="mt-5 text-white fw-lighter align-self-bottom">Checkout</h1>
+        <p class="text-white fw-lighter">
+          Please fill out the form to finish your purchase
+        </p>
       </div>
 
-      <div class="row mr-0">
-        <div class="col-sm-6">
-          <h2 class="my-3 mx-5 bord shadow">
-            <i class="far fa-thumbs-up bg p-4 mr-4"></i>Quality Assured
-          </h2>
+      <!-- icons starts here -->
+      <!--  <div class="icons">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2 class="my-3 mx-5 bord shadow">
+              <i class="fas fa-dollar-sign bg p-4 mr-4"></i>Cash on Delivery
+            </h2>
+          </div>
+          <div class="col-sm-6">
+            <h2 class="my-3 mx-5 bord shadow">
+              <i class="fas fa-arrows-alt-h bg p-4 mr-4"></i>100% Return
+            </h2>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <h2 class="my-3 mx-5 bord shadow">
-            <i class="fas fa-stopwatch bg p-4 mr-4"></i>Delivery on time
-          </h2>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <h2 class="my-3 mx-5 bord shadow">
+              <i class="far fa-thumbs-up bg p-4 mr-4"></i>Quality Assured
+            </h2>
+          </div>
+          <div class="col-sm-6">
+            <h2 class="my-3 mx-5 bord shadow">
+              <i class="fas fa-stopwatch bg p-4 mr-4"></i>Delivery on time
+            </h2>
+          </div>
         </div>
-      </div>
+      </div> -->
+      <!-- icons end here -->
+      <!-- Checkout starts here -->
+      <form class="form">
+        <div class="row bord p-5 shadow m-5">
+          <div class="col-sm-6">
+            <div class="mt-3 row">
+              <h5 class="my-auto">First Name :</h5>
+              <input class="ml-3 name input rounded p-2 form-control type="text"
+              placeholder="First Name" />
+            </div>
+            <div class="mt-3 row">
+              <h5 class="my-auto">Email :</h5>
+              <input
+                class="ml-3 email input rounded p-2 form-control"
+                type="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="mt-3 row">
+              <h5 class="my-auto">Address :</h5>
+              <input
+                class="ml-3 address input rounded p-2 form-control"
+                type="text"
+                placeholder="Address"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mt-3 row">
+              <h5 class="my-auto name my-auto">Last Name :</h5>
+              <input
+                class="ml-3 lastName input rounded p-2 form-control"
+                type="text"
+                placeholder="Last Name"
+              />
+            </div>
+            <div class="mt-3 row">
+              <h5 class="my-auto my-auto">Password :</h5>
+              <input
+                class="ml-3 input password rounded p-2 form-control"
+                title="(4-8 characters)"
+                type="password"
+                minlength="4"
+                maxlength="8"
+                placeholder="Password"
+              />
+            </div>
+            <div class="mt-3 row">
+              <h5 class="my-auto my-auto">Phone Number :</h5>
+              <input
+                class="ml-3 phone input form-control rounded p-2"
+                type="text"
+                placeholder="Phone No."
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkout ends here -->
+        <!-- Buy button -->
+        <div class="m-5 final text-right">
+          <button
+            type="submit"
+            id="btn"
+            class="p-2 px-4 btn boton btn-primary shadow-lg"
+          >
+            <i class="fas fa-cart-arrow-down p-2"></i>Buy
+          </button>
+        </div>
+      </form>
+      <footer class="p-3">
+        <div class="row">
+          <div class="col-12 col-md-4 text-center"><h4>ShopNow</h4></div>
+          <div class="col-12 col-md-4 d-flex justify-content-around">
+            <a href="">Grocery</a><a href="">Beauty</a><a href="">Clothes</a>
+          </div>
+          <div class="col-12 col-md-4 mt-2 d-flex justify-content-around">
+            <i class="fab fa-instagram"></i><i class="fab fa-facebook"></i
+            ><i class="fab fa-twitter"></i>
+          </div>
+        </div>
+        <hr />
+        <div class="row mt-2 fs-7">
+          <div class="col-6 text-center fw-lighter">
+            © 2021 ShopNow. All rights reserved
+          </div>
+          <div class="col-6 d-flex justify-content-evenly fw-lighter">
+            <a href="">Terms and Conditions</a><a href="">Privacy Policy</a>
+          </div>
+        </div>
+      </footer>
     </div>
-    <!-- icons end here -->
-    <!-- Checkout starts here -->
-    <form class="form">
-      <div class="row bord p-5 shadow m-5">
-        <div class="col-sm-6">
-          <div class="mt-3 row">
-            <h5 class="my-auto">First Name :</h5>
-            <input class="ml-3 name input rounded p-2 form-control type="text"
-            placeholder="First Name" />
-          </div>
-          <div class="mt-3 row">
-            <h5 class="my-auto">Email :</h5>
-            <input
-              class="ml-3 email input rounded p-2 form-control"
-              type="email"
-              placeholder="Email"
-            />
-          </div>
-          <div class="mt-3 row">
-            <h5 class="my-auto">Address :</h5>
-            <input
-              class="ml-3 address input rounded p-2 form-control"
-              type="text"
-              placeholder="Address"
-            />
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="mt-3 row">
-            <h5 class="my-auto name my-auto">Last Name :</h5>
-            <input
-              class="ml-3 lastName input rounded p-2 form-control"
-              type="text"
-              placeholder="Last Name"
-            />
-          </div>
-          <div class="mt-3 row">
-            <h5 class="my-auto my-auto">Password :</h5>
-            <input
-              class="ml-3 input password rounded p-2 form-control"
-              title="(4-8 characters)"
-              type="password"
-              minlength="4"
-              maxlength="8"
-              placeholder="Password"
-            />
-          </div>
-          <div class="mt-3 row">
-            <h5 class="my-auto my-auto">Phone Number :</h5>
-            <input
-              class="ml-3 phone input form-control rounded p-2"
-              type="text"
-              placeholder="Phone No."
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Checkout ends here -->
-      <!-- Buy button -->
-      <div class="m-5 final text-right">
-        <button
-          type="submit"
-          id="btn"
-          class="p-2 px-4 btn boton btn-primary shadow-lg"
-        >
-          <i class="fas fa-cart-arrow-down p-2"></i>Buy
-        </button>
-      </div>
-    </form>
     <!-- Buy Button -->
     <!-- script tags -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
     <script src="js/checkout.js"></script>
   </body>
 </html>

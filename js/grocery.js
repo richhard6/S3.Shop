@@ -144,11 +144,16 @@ const getCupcakeDiscount = (cupcakeMix) => {
 
   const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
 
-  const totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
+  console.log(quantityToCupcakeDiscount, twoThirdsDisc)
+
+  let totalDiscount = (quantityToCupcakeDiscount - twoThirdsDisc).toFixed(2)
+
+  console.log(totalDiscount)
 
   if (cupcakeMix > 10 && prevCupcakeDiscount !== totalDiscount) {
     subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
     prevCupcakeDiscount = totalDiscount
+
     return totalDiscount
   }
 }
@@ -265,16 +270,18 @@ const addSinglePromotion = (itemToAdd) => {
 
   occurence.quantity++
 
-  occurence.subtotal = occurence.quantity * occurence.price
+  occurence.subtotal = (occurence.quantity * occurence.price).toFixed(2)
 
   if (occurence.name === 'Cooking oil') {
     let discount = getOilDiscount(occurence.quantity)
+
     console.log(discount)
     if (discount !== undefined) {
       occurence.discount += discount
     }
   } else if (occurence.name === 'Instant cupcake mixture') {
     let discount = getCupcakeDiscount(occurence.quantity)
+
     if (discount !== undefined) {
       let finalDiscount = discount - occurence.discount
 
@@ -300,7 +307,10 @@ function removeFromCart(itemToRemove) {
       itemFound.name !== 'Instant cupcake mixture'
     ) {
       itemFound.subtotal -= itemFound.price
+      itemFound.subtotal = itemFound.subtotal.toFixed(2)
       itemFound.subtotalWithDiscount -= itemFound.price
+
+      console.log('posiciones')
     }
 
     if (itemFound.name === 'Cooking oil') {
@@ -328,15 +338,14 @@ function removeFromCart(itemToRemove) {
       prevCupcakeDiscount = 0
       let discount = getCupcakeDiscount(itemFound.quantity)
 
+      itemFound.subtotal = itemFound.quantity * itemFound.price
+      itemFound.subtotalWithDiscount = itemFound.subtotal - prevCupcakeDiscount
+
       if (discount !== undefined && itemFound.discount !== 0) {
         itemFound.discount = discount
       } else {
         itemFound.discount = 0
-        const quantityToCupcakeDiscount = 11 * products[2].price
-        const twoThirdsDisc = quantityToCupcakeDiscount * 0.66
-        let totalDiscount = quantityToCupcakeDiscount - twoThirdsDisc
-        totalDiscount = itemFound.quantity < 10 ? 0 : totalDiscount
-        itemFound.subtotalWithDiscount += totalDiscount
+        itemFound.subtotalWithDiscount = itemFound.quantity * itemFound.price
       }
     }
 
@@ -354,9 +363,15 @@ function removeFromCart(itemToRemove) {
 
 const addSubtotalsWithDiscount = () => {
   const reducer = (sum, currentVal) => sum + currentVal
-  const total = cart.map((item) => item.subtotalWithDiscount).reduce(reducer)
+
   const totalDOM = document.querySelector('.total')
-  totalDOM.innerText = total + '$'
+
+  if (cart.length === 0) {
+    totalDOM.innerText = 'Select something'
+  } else {
+    const total = cart.map((item) => item.subtotalWithDiscount).reduce(reducer)
+    totalDOM.innerText = total.toFixed(2) + '$'
+  }
 }
 
 function selectItem(e) {
@@ -389,12 +404,13 @@ function printCart(item) {
     'd-flex',
     'justify-content-between',
     'align-items-center',
+    'text-white',
   ]
 
   listItem.classList.add(...classesToAdd)
 
   for (let i = 0; i < 5; i++) {
-    let quantityClasses = ['badge', 'bg-primary', 'rounded-pill']
+    let quantityClasses = ['badge', 'pill', 'rounded-pill', 'fs-5']
 
     let notNameDivClasses = [
       'd-flex',
@@ -402,6 +418,7 @@ function printCart(item) {
       'align-items-center',
       'col-2',
       'h-100',
+      'text-white',
     ]
 
     const div = document.createElement('div')
@@ -462,11 +479,11 @@ function printCart(item) {
     addSubtotalsWithDiscount()
   })
 
-  toast.classList.remove(...toastClasses)
+  toast.classList.replace('hidden', 'toasty')
   timer = setTimeout(() => {
     window.clearTimeout(timer)
-    toast.classList.add(...toastClasses)
-  }, 2000)
+    toast.classList.replace('toasty', 'hidden')
+  }, 1000)
 
   list.appendChild(listItem)
 
