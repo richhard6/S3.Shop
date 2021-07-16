@@ -5,6 +5,7 @@ button.addEventListener('click', validate)
 function validate(e) {
   e.preventDefault()
   inputs.forEach(handleInputsErrors)
+  handleSend()
 }
 
 const handleTextError = (input, message) => {
@@ -85,8 +86,48 @@ const handleStyles = (input, errorMessage, validation) => {
   } else {
     input.classList.remove('is-invalid')
     input.classList.add('is-valid')
+
     if (input.nextElementSibling) {
       input.nextElementSibling.remove()
     }
   }
+}
+
+const handleSend = () => {
+  const validatedInputs = Array.from(inputs)
+  const allValid = validatedInputs.every(
+    (input) => input.classList[input.classList.length - 1] === 'is-valid'
+  )
+  if (allValid) {
+    const classesToAdd = ['spinner-grow', 'spinner-grow-lg']
+    document.querySelector('.form').remove()
+    const main = document.querySelector('.checkout-main-picture')
+    const div = document.createElement('div')
+
+    div.classList.add('sentData')
+    const spinner = document.createElement('div')
+    div.appendChild(spinner)
+
+    spinner.classList.add(...classesToAdd)
+
+    main.insertAdjacentElement('afterend', div)
+
+    const finished = document.createElement('div')
+
+    finished.textContent = 'xD'
+
+    setTimeout(() => {
+      const prueba = document.querySelector('.sentData')
+      div.replaceChild(finished, spinner)
+    }, 1000)
+  }
+}
+
+const testInputs = () => {
+  inputs[0].value = 'Richard'
+  inputs[1].value = 'richard@gmail.com'
+  inputs[2].value = 'asdasda'
+  inputs[3].value = 'Perdomo'
+  inputs[4].value = '11231a'
+  inputs[5].value = '111111'
 }

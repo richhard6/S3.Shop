@@ -46,15 +46,27 @@ body {
 
 .btn {
   background-color: var(--secondary-color);
+  position: relative;
+  overflow: hidden;
   border: none;
+
+  color: white;
+  transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transform: scale(1);
+}
+
+.click {
+  transform: scale(0.95);
 }
 
 .btn:hover {
   background-color: var(--secondary-color);
+  color: white;
 }
 
 .btn:focus {
   background-color: var(--secondary-color);
+  box-shadow: none;
 }
 
 footer {
@@ -168,6 +180,26 @@ footer a:hover {
 .hidden {
   opacity: 0;
   transition: opacity 1s ease-in-out;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute; /* The absolute position we mentioned earlier */
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
 }
 
 @media (min-width: 500px) and (max-width: 767px) {

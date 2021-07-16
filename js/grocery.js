@@ -2,10 +2,14 @@ const list = document.querySelector('.list')
 const addToCartButton = document.querySelectorAll('.card button')
 const toast = document.querySelector('#liveToast')
 const toastText = toast.querySelector('.toast-body')
+
+const checkout = document.querySelector('.checkout')
+
 let products
 
 addToCartButton.forEach((product) => {
   product.addEventListener('click', selectItem)
+
   product.setAttribute('id', 'liveToastBtn')
 })
 
@@ -31,11 +35,8 @@ const subtotal = {
 }
 
 let total = 0
-// y tal vez un clear all CART items. y poner un boton en el modal
-//localStorage para tener el total y los items con sus imagenes y cantidades en
-//el checkout.
-//se podria refactorizar algo de este grocery.js
-//hay que arreglar la cantidad para que no muestre mas de 3 decimales.
+
+if (cart.length === 0) checkout.style.display = 'none'
 
 // Exercise 1
 function addToCartList(item) {
@@ -356,6 +357,7 @@ function removeFromCart(itemToRemove) {
       lastToRemove = itemFound.name
       cart = cartWithoutItem
     }
+    if (cart.length === 0) checkout.style.display = 'none'
   } else {
     console.warn(`${itemToRemove.name} is not in your cart`)
   }
@@ -375,7 +377,16 @@ const addSubtotalsWithDiscount = () => {
 }
 
 function selectItem(e) {
-  //ojo con esto al cambiar el layout s
+  if (checkout.style.display === 'none') checkout.style.display = ''
+
+  const button = e.target
+
+  button.classList.add('click')
+
+  setTimeout(() => {
+    button.classList.remove('click')
+  }, 300)
+
   const itemToAdd = e.target.parentElement.firstChild.nextSibling.textContent
 
   addToCart(itemToAdd)
@@ -461,10 +472,6 @@ function printCart(item) {
   }
 
   listItem.setAttribute('data-itemtype', item.name)
-
-  const toastClasses = ['toast', 'hide']
-
-  //mejorar esto para que haga un fade in y se vea mejor.. Refactorizr todo esto tambien podria ser
 
   buttonMinus.addEventListener('click', () => {
     removeFromCart(item.name)
