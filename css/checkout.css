@@ -38,6 +38,28 @@ body {
   justify-content: center;
   align-items: center;
   height: 69vh;
+  position: relative;
+}
+
+.finished:hover {
+  box-shadow: 1px 1px #108d9b, 2px 2px #108d9b, 3px 3px #108d9b;
+  background-color: #f4a261;
+  -webkit-transform: translateX(-3px);
+  transform: translateX(-3px);
+  border-radius: 50%;
+}
+
+.finished {
+  height: min(300px, 100%);
+  width: min(300px, 100%);
+  background: #108d9b;
+
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 30%;
+
+  z-index: 1;
+  transition: all 2s ease-in-out;
 }
 
 .spinner-grow {

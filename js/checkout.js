@@ -113,12 +113,20 @@ const handleSend = () => {
     main.insertAdjacentElement('afterend', div)
 
     const finished = document.createElement('div')
+    const decorative = document.createElement('div')
+
+    decorative.classList.add('decorative')
+
+    const decorative2 = document.createElement('div')
+
+    finished.classList.add('finished')
 
     finished.textContent = 'xD'
 
     setTimeout(() => {
-      const prueba = document.querySelector('.sentData')
       div.replaceChild(finished, spinner)
+
+      div.appendChild(decorative)
     }, 1000)
   }
 }
