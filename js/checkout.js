@@ -94,7 +94,6 @@ const handleStyles = (input, errorMessage, validation) => {
     }
   }
   if (input.classList.contains('is-invalid')) {
-    console.log('adasd')
     input.classList.remove('is-invalid')
     setTimeout(() => {
       input.classList.add('is-invalid')
