@@ -90,3 +90,14 @@ main div h4 {
 .main-text {
   font-weight: 100;
 }
+
+@media screen and (min-width: 1680px) {
+  .container-fluid {
+    max-width: 1440px;
+  }
+
+  .navbar {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}

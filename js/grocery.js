@@ -7,6 +7,19 @@ const checkout = document.querySelector('.checkout')
 
 let products
 
+const cartIcon = document.querySelector('.nav-link i')
+
+console.log(cartIcon)
+
+function changeIcon() {
+  console.log(cartIcon)
+  //cartIcon.classList.add('fa-plus')
+  cartIcon.classList.add('grow')
+  setTimeout(() => {
+    cartIcon.classList.remove('grow')
+  }, 50)
+}
+
 addToCartButton.forEach((product) => {
   product.addEventListener('click', selectItem)
 
@@ -310,8 +323,6 @@ function removeFromCart(itemToRemove) {
       itemFound.subtotal -= itemFound.price
       itemFound.subtotal = itemFound.subtotal.toFixed(2)
       itemFound.subtotalWithDiscount -= itemFound.price
-
-      console.log('posiciones')
     }
 
     if (itemFound.name === 'Cooking oil') {
@@ -390,6 +401,7 @@ function selectItem(e) {
   const itemToAdd = e.target.parentElement.firstChild.nextSibling.textContent
 
   addToCart(itemToAdd)
+  changeIcon()
 
   const itemToPrint = cart.find((item) => item.name === itemToAdd)
 

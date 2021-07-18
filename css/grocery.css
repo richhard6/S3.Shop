@@ -182,15 +182,18 @@ footer a:hover {
   transition: opacity 1s ease-in-out;
 }
 
-.btn:focus {
-  box-shadow: none;
+.nav-link i {
+  transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transform: scale(1);
 }
 
-@keyframes ripple {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
+.fa-plus {
+  transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transform: scale(3);
+}
+
+.grow {
+  transform: scale(1.8) !important;
 }
 
 .ripple {
@@ -209,5 +212,16 @@ footer a:hover {
 
   section div {
     align-items: center;
+  }
+}
+
+@media screen and (min-width: 1680px) {
+  .container-fluid {
+    max-width: 1440px;
+  }
+
+  .navbar {
+    max-width: 1440px;
+    margin: 0 auto;
   }
 }

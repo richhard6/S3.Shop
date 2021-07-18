@@ -1,5 +1,6 @@
 const button = document.querySelector('.boton')
 const inputs = document.querySelectorAll('input')
+
 button.addEventListener('click', validate)
 
 function validate(e) {
@@ -70,6 +71,7 @@ const handleStyles = (input, errorMessage, validation) => {
     (validation === true && true)
 
   if (finalValidation) {
+    input.classList.remove('is-invalid')
     input.classList.add('is-invalid')
     input.classList.remove('is-valid')
     input.focus()
@@ -91,6 +93,13 @@ const handleStyles = (input, errorMessage, validation) => {
       input.nextElementSibling.remove()
     }
   }
+  if (input.classList.contains('is-invalid')) {
+    console.log('adasd')
+    input.classList.remove('is-invalid')
+    setTimeout(() => {
+      input.classList.add('is-invalid')
+    }, 10)
+  }
 }
 
 const handleSend = () => {
@@ -99,34 +108,36 @@ const handleSend = () => {
     (input) => input.classList[input.classList.length - 1] === 'is-valid'
   )
   if (allValid) {
-    const classesToAdd = ['spinner-grow', 'spinner-grow-lg']
+    const classesToAdd = ['finalMessage']
+
+    const iconClasses = ['fas', 'fa-check', 'iconCheck']
     document.querySelector('.form').remove()
     const main = document.querySelector('.checkout-main-picture')
     const div = document.createElement('div')
 
     div.classList.add('sentData')
-    const spinner = document.createElement('div')
-    div.appendChild(spinner)
 
-    spinner.classList.add(...classesToAdd)
+    const finished = document.createElement('div')
+    finished.classList.add('finished')
+
+    const finalMessage = document.createElement('div')
+    const icon = document.createElement('i')
+
+    icon.classList.add(...iconClasses)
+
+    finalMessage.textContent =
+      'Thanks for your purchase, expect your order in 1 day'
+
+    finalMessage.appendChild(icon)
+
+    finalMessage.classList.add(...classesToAdd)
 
     main.insertAdjacentElement('afterend', div)
 
-    const finished = document.createElement('div')
-    const decorative = document.createElement('div')
-
-    decorative.classList.add('decorative')
-
-    const decorative2 = document.createElement('div')
-
-    finished.classList.add('finished')
-
-    finished.textContent = 'xD'
+    div.appendChild(finished)
 
     setTimeout(() => {
-      div.replaceChild(finished, spinner)
-
-      div.appendChild(decorative)
+      div.replaceChild(finalMessage, finished)
     }, 1000)
   }
 }
