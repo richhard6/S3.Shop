@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
-@keyframes slideInFromLeft {
+@keyframes fadeIn {
   0% {
     opacity: 0.5;
   }
@@ -12,7 +12,7 @@
 body {
   font-family: Poppins;
   background-color: #fffcfc;
-  animation: 1s ease-out 0s 1 slideInFromLeft;
+  animation: 1s ease-out 0s 1 fadeIn;
 }
 
 ::-webkit-scrollbar {
