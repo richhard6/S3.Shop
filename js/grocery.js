@@ -10,7 +10,6 @@ let products
 const cartIcon = document.querySelector('.nav-link i')
 
 function changeIcon() {
-  //cartIcon.classList.add('fa-plus')
   cartIcon.classList.add('grow')
   setTimeout(() => {
     cartIcon.classList.remove('grow')
