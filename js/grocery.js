@@ -454,7 +454,7 @@ function printCart(item) {
       buttonMinus.classList.add('minus-button')
       const buttonText = document.createTextNode('-')
       buttonMinus.appendChild(buttonText)
-      buttonMinus.classList.add('me-1')
+
       div.appendChild(buttonMinus)
     }
 
@@ -471,7 +471,7 @@ function printCart(item) {
         buttonPlus.classList.add('plus-button')
         const buttonText = document.createTextNode('+')
         buttonPlus.appendChild(buttonText)
-        buttonPlus.classList.add('ms-1')
+
         div.appendChild(buttonPlus)
       }
 
