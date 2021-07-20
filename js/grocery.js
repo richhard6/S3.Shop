@@ -1,13 +1,17 @@
+/* import products from './products.json' */
+
 const list = document.querySelector('.list')
 const addToCartButton = document.querySelectorAll('.card button')
 const toast = document.querySelector('#liveToast')
-const toastText = toast.querySelector('.toast-body')
+const toastText = document.querySelector('.toast-body')
 
 const checkout = document.querySelector('.checkout')
 
-let products
-
 const cartIcon = document.querySelector('.nav-link i')
+
+fetch('./js/products.json')
+  .then((response) => response.json())
+  .then((data) => (products = data))
 
 function changeIcon() {
   cartIcon.classList.add('grow')
@@ -21,10 +25,6 @@ addToCartButton.forEach((product) => {
 
   product.setAttribute('id', 'liveToastBtn')
 })
-
-fetch('./js/products.json')
-  .then((response) => response.json())
-  .then((data) => (products = data))
 
 let cartList = []
 let cart = []
@@ -56,12 +56,14 @@ function addToCartList(item) {
   } else {
     cartList.push(desiredProduct)
   }
-  console.log(cartList)
+
+  return cartList
 }
 
 // Exercise 2
 function cleanCart() {
   cartList.length = 0
+  return cartList
 }
 
 // Exercise 3
@@ -92,7 +94,7 @@ function calculateSubtotals() {
     }
   }
   avoidRecalculation(currentAdd.grocery, currentAdd.beauty, currentAdd.clothes)
-  console.log(subtotal)
+  return subtotal
 }
 const avoidRecalculation = (grocery, beauty, clothes) => {
   if (previousAdd.grocery !== grocery) {
@@ -508,3 +510,5 @@ function printCart(item) {
 
   if (foundItem) list.replaceChild(listItem, foundItem)
 }
+
+module.exports = { addToCartList, cleanCart, calculateSubtotals }
