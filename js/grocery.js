@@ -459,7 +459,7 @@ function printCart(item) {
     }
 
     if (i === 1) {
-      div.classList.add('col-5')
+      div.classList.add('col-3')
     } else {
       div.classList.add(...notNameDivClasses)
     }
