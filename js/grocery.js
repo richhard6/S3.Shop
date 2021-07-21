@@ -9,10 +9,6 @@ const checkout = document.querySelector('.checkout')
 
 const cartIcon = document.querySelector('.nav-link i')
 
-/* fetch('./js/products.json')
-  .then((response) => response.json())
-  .then((data) => (products = data)) */
-
 function changeIcon() {
   cartIcon.classList.add('grow')
   setTimeout(() => {
@@ -45,7 +41,7 @@ const subtotal = {
 
 let total = 0
 
-if (cart.length === 0) checkout.style.display = 'none'
+/* if (cart.length === 0) checkout.style.display = 'none' */
 
 // Exercise 1
 function addToCartList(item) {
@@ -107,7 +103,7 @@ const avoidRecalculation = (grocery, beauty, clothes) => {
     subtotal.clothes.value += clothes - previousAdd.clothes
     previousAdd.clothes = clothes
   } else {
-    return
+    return "can't calculate items that are already there"
   }
 }
 
@@ -120,6 +116,7 @@ function calculateTotal() {
     sum += subtotal[kind].value - subtotal[kind].discount
   }
   total = sum
+  return total
 }
 
 // Exercise 5
@@ -148,7 +145,7 @@ function applyPromotionsSubtotals() {
   getCupcakeDiscount(itemsQuantity.cupcakeMix)
   getOilDiscount(itemsQuantity.cookingOil)
 
-  calculateTotal()
+  return calculateTotal()
 }
 
 const getCupcakeDiscount = (cupcakeMix) => {
@@ -166,7 +163,7 @@ const getCupcakeDiscount = (cupcakeMix) => {
     subtotal.grocery.discount += totalDiscount - prevCupcakeDiscount
     prevCupcakeDiscount = totalDiscount
 
-    return totalDiscount
+    return Number(totalDiscount)
   }
 }
 
@@ -183,7 +180,7 @@ const getOilDiscount = (cookingOil) => {
 
     subtotal.grocery.discount += quantityToOilDiscount
 
-    console.log(quantityToOilDiscount)
+    console.log(subtotal.grocery.discount)
     return quantityToOilDiscount
   }
 }
@@ -237,7 +234,7 @@ function generateCart() {
     }
   })
   applyPromotionsCart()
-  console.log(cart)
+  return cart
 }
 
 // Exercise 7
@@ -247,6 +244,7 @@ function applyPromotionsCart() {
   }
 
   cart.forEach((item) => finalSubtotal(item))
+  return cart
 }
 
 // Exercise 8
@@ -511,4 +509,15 @@ function printCart(item) {
   if (foundItem) list.replaceChild(listItem, foundItem)
 }
 
-module.exports = { addToCartList, cleanCart, calculateSubtotals }
+module.exports = {
+  addToCartList,
+  cleanCart,
+  calculateSubtotals,
+  avoidRecalculation,
+  calculateTotal,
+  applyPromotionsSubtotals,
+  getCupcakeDiscount,
+  getOilDiscount,
+  generateCart,
+  applyPromotionsCart,
+}
