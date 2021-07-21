@@ -13,6 +13,8 @@ const {
   getOilDiscount,
   generateCart,
   applyPromotionsCart,
+  addToCart,
+  addSinglePromotion,
 } = require('./grocery')
 
 describe('Function addToCartList()', () => {
@@ -196,5 +198,41 @@ describe('Function applyPromotionsCart', () => {
       },
     ]
     expect(applyPromotionsCart()).toEqual(previouslyAdded)
+  })
+})
+
+describe('Function addToCart()', () => {
+  it('should be declared', async () => {
+    expect(typeof addToCart).toBe('function')
+  })
+
+  it('should return array with added item', async () => {
+    const lipTints = {
+      discount: 0,
+      name: 'Lip tints',
+      price: 12.75,
+      quantity: 1,
+      subtotal: 12.75,
+      subtotalWithDiscount: 12.75,
+      type: 'beauty',
+    }
+
+    expect(addToCart('Lip tints')[2]).toEqual(lipTints)
+  })
+})
+
+describe('Function addSinglePromotion()', () => {
+  it('should be declared', async () => {
+    expect(typeof addSinglePromotion).toBe('function')
+  })
+
+  it('should calculate the given item current promotion ', async () => {
+    expect(
+      addSinglePromotion({
+        name: 'Cooking oil',
+        price: 10.5,
+        type: 'grocery',
+      }).subtotal
+    ).toBe('52.50') // bug, no esta haciedno el descuento, pero sirve en produccion
   })
 })

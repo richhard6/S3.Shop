@@ -41,7 +41,7 @@ const subtotal = {
 
 let total = 0
 
-/* if (cart.length === 0) checkout.style.display = 'none' */
+if (checkout && cart.length === 0) checkout.style.display = 'none'
 
 // Exercise 1
 function addToCartList(item) {
@@ -251,7 +251,8 @@ function applyPromotionsCart() {
 function addToCart(itemToAdd) {
   itemToAdd = products.find((item) => itemToAdd === item.name)
 
-  toastText.innerText = `${itemToAdd.name} has been added to your cart`
+  if (toastText)
+    toastText.innerText = `${itemToAdd.name} has been added to your cart`
 
   itemToAdd.subtotal = itemToAdd.price
 
@@ -272,7 +273,7 @@ function addToCart(itemToAdd) {
     applyPromotionsCart()
   }
 
-  console.log(cart)
+  return cart
 }
 
 const addSinglePromotion = (itemToAdd) => {
@@ -298,6 +299,7 @@ const addSinglePromotion = (itemToAdd) => {
       occurence.discount += finalDiscount
     }
   }
+  return occurence
 }
 
 // Exercise 9
@@ -520,4 +522,6 @@ module.exports = {
   getOilDiscount,
   generateCart,
   applyPromotionsCart,
+  addToCart,
+  addSinglePromotion,
 }
