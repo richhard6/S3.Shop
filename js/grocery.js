@@ -62,6 +62,10 @@ function cleanCart() {
   return cartList
 }
 
+function cleanDefinive() {
+  cart.length = 0
+  return cart
+}
 // Exercise 3
 
 const previousAdd = {
@@ -309,7 +313,8 @@ function removeFromCart(itemToRemove) {
 
   const itemFound = cart.find((item) => item.name === itemToRemove.name)
 
-  toastText.innerText = `${itemFound.name} has been removed from your cart`
+  if (toastText)
+    toastText.innerText = `${itemFound.name} has been removed from your cart`
 
   if (itemFound) {
     itemFound.quantity--
@@ -370,6 +375,8 @@ function removeFromCart(itemToRemove) {
   } else {
     console.warn(`${itemToRemove.name} is not in your cart`)
   }
+
+  return cart
 }
 
 const addSubtotalsWithDiscount = () => {
@@ -379,9 +386,11 @@ const addSubtotalsWithDiscount = () => {
 
   if (cart.length === 0) {
     totalDOM.innerText = 'Select something'
+    return totalDOM.innerText
   } else {
     const total = cart.map((item) => item.subtotalWithDiscount).reduce(reducer)
     totalDOM.innerText = total.toFixed(2) + '$'
+    return total
   }
 }
 
@@ -524,4 +533,7 @@ module.exports = {
   applyPromotionsCart,
   addToCart,
   addSinglePromotion,
+  removeFromCart,
+  addSubtotalsWithDiscount,
+  cleanDefinive,
 }

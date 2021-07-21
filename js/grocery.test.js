@@ -15,6 +15,9 @@ const {
   applyPromotionsCart,
   addToCart,
   addSinglePromotion,
+  removeFromCart,
+  addSubtotalsWithDiscount,
+  cleanDefinive,
 } = require('./grocery')
 
 describe('Function addToCartList()', () => {
@@ -234,5 +237,51 @@ describe('Function addSinglePromotion()', () => {
         type: 'grocery',
       }).subtotal
     ).toBe('52.50') // bug, no esta haciedno el descuento, pero sirve en produccion
+  })
+})
+
+describe('Function removeFromCart()', () => {
+  it('should be declared', async () => {
+    addToCartList('Cooking oil')
+
+    expect(typeof removeFromCart).toBe('function')
+  })
+
+  it('should remove lip tints from cart', async () => {
+    expect(
+      removeFromCart('Lip tints').some((item) => item.name === 'Lip tints')
+    ).toEqual(false)
+  })
+})
+
+describe('Function addSubtotalsWithDiscount()', () => {
+  it('should be declared', async () => {
+    expect(typeof addSubtotalsWithDiscount).toBe('function')
+  })
+
+  it('should return the subtotal calculated with discount', async () => {
+    document.body.innerHTML = '<div class="total">' + '</div>'
+
+    expect(typeof addSubtotalsWithDiscount()).toBe('number')
+  })
+
+  it('should return a string because no item is in the cart', async () => {
+    document.body.innerHTML = '<div class="total">' + '</div>'
+    cleanDefinive()
+
+    expect(typeof addSubtotalsWithDiscount()).toBe('string')
+  })
+})
+
+describe('Function cleanDefinitive()', () => {
+  it('should be declared', async () => {
+    expect(typeof cleanDefinive).toBe('function')
+  })
+
+  it('should remove all the added items', async () => {
+    addToCart('Pasta')
+    addToCart('Lip tints')
+
+    expect(cleanDefinive()).toEqual([])
   })
 })
