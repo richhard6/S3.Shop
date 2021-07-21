@@ -1,4 +1,4 @@
-/* import products from './products.json' */
+import { products } from './products.js'
 
 const list = document.querySelector('.list')
 const addToCartButton = document.querySelectorAll('.card button')
@@ -9,9 +9,9 @@ const checkout = document.querySelector('.checkout')
 
 const cartIcon = document.querySelector('.nav-link i')
 
-fetch('./js/products.json')
+/* fetch('./js/products.json')
   .then((response) => response.json())
-  .then((data) => (products = data))
+  .then((data) => (products = data)) */
 
 function changeIcon() {
   cartIcon.classList.add('grow')
